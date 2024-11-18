@@ -1,0 +1,125 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 19
+    },
+    "configurePresets": [
+        {
+            "name": "linux-base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/Output/Binary/${presetName}",
+            "installDir": "${sourceDir}/Output/Install/${presetName}",
+            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_CXX_STANDARD": "20",
+                "CMAKE_CXX_STANDARD_REQUIRED": true
+            }
+        },
+        {
+            "name": "linux-x64-debug",
+            "displayName": "Linux x86_64 Debug",
+            "description": "Configures debug configuration for Linux on x86_64",
+            "inherits": "linux-base",
+            "architecture":{
+                "strategy": "external",
+                "value": "x86_64"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Debug"
+            }
+        },
+        {
+            "name": "linux-x64-release",
+            "displayName": "Linux x86_64 Release",
+            "description": "Configures release configuration for Linux on x86_64",
+            "inherits": "linux-base",
+            "architecture":{
+                "strategy": "external",
+                "value": "x86_64"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Release"
+            }
+        },
+        {
+            "name": "windows-base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/Output/Binary/${presetName}",
+            "installDir": "${sourceDir}/Output/Install/${presetName}",
+            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang.exe",
+                "CMAKE_CXX_COMPILER": "clang++.exe",
+                "CMAKE_CXX_STANDARD": "20",
+                "CMAKE_CXX_STANDARD_REQUIRED": true
+            }
+        },
+        {
+            "name": "windows-x64-debug",
+            "displayName": "Windows x86_64 Debug",
+            "description": "Configures debug configuration for Windows on x86_64",
+            "inherits": "windows-base",
+            "architecture":{
+                "strategy": "external",
+                "value": "x86_64"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Debug"
+            }
+        },
+        {
+            "name": "windows-x64-release",
+            "displayName": "Windows x86_64 Release",
+            "description": "Configures release configuration for Windows on x86_64",
+            "inherits": "windows-base",
+            "architecture":{
+                "strategy": "external",
+                "value": "x86_64"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "build-linux-x64-debug",
+            "displayName": "Build Linux x86_64 Debug",
+            "configurePreset": "linux-x64-debug",
+            "cleanFirst": true
+        },
+        {
+            "name": "build-linux-x64-release",
+            "displayName": "Build Linux x86_64 Release",
+            "configurePreset": "linux-x64-release",
+            "cleanFirst": true
+        },
+        {
+            "name": "build-windows-x64-debug",
+            "displayName": "Build Windows x86_64 Debug",
+            "configurePreset": "windows-x64-debug",
+            "cleanFirst": true
+        },
+        {
+            "name": "build-windows-x64-release",
+            "displayName": "Build Windows x86_64 Release",
+            "configurePreset": "windows-x64-release",
+            "cleanFirst": true
+        }
+    ]
+}
