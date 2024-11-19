@@ -25,3 +25,5 @@ if (WIN32)
         "$<TARGET_FILE_DIR:Sandbox>"
     )
 endif()
+
+install(TARGETS Sandbox DESTINATION ./bin/)
