@@ -9,8 +9,15 @@
 
     src = ./.;
 
-    nativeBuildInputs = with pkgs; [ cmake vcpkg ninja ];
-    buildInputs = with pkgs; [ spdlog glfw ];
+    nativeBuildInputs = with pkgs; [
+      cmake
+      vcpkg
+      ninja
+    ];
+    buildInputs = with pkgs; [
+      spdlog
+      glfw
+    ];
 
     meta = {
       mainProgram = "Sandbox";
