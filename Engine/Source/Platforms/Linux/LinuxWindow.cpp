@@ -40,7 +40,9 @@ namespace Katalyst
 		if (!s_GlFWInitialized)
 		{
 			int success = glfwInit();
-			KL_CORE_ASSERT(success, "Unable to initialize GLFW");
+			const char* errorMessage;
+			int errorCode = glfwGetError(&errorMessage);
+			KL_CORE_ASSERT(success, "Unable to initialize GLFW: " + fmt::format("0x{:x} {:s}", errorCode, errorMessage));
 
 			s_GlFWInitialized = true;
 		}
