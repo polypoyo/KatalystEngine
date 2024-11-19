@@ -13,7 +13,7 @@
     buildInputs = with pkgs; [ spdlog glfw ];
 
     meta = {
-      mainProgram = "katalyst";
+      mainProgram = "Sandbox";
       platforms = lib.platforms.linux;
       maintainers = [];
     };
