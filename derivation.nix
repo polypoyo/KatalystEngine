@@ -16,7 +16,10 @@
     ];
     buildInputs = with pkgs; [
       spdlog
-      glfw
+      # For some reason, regular glfw-wayland
+      # doesn't work. So, we have to use this
+      # version intended for Minecraft. Logic.
+      glfw-wayland-minecraft
     ];
 
     meta = {
