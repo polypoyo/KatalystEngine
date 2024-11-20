@@ -5,3 +5,6 @@
 # Unneccessary output directories required for building
 Output/
 vcpkg_installed/
+
+# Nix
+result
