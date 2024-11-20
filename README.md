@@ -3,7 +3,7 @@
 
 An in-house, experimental, ground-up recreation of the [Hazel Engine](https://github.com/TheCherno/Hazel). While much of the architecture follows the Hazel Engine series, we have additional requirements that extend beyond the series' scope. Another reason for not directly forking Hazel is to deepen our understanding of engine development, allowing us to learn and maintain complete control over the games we aim to produce at OpenNullanoid.
 
-The engine project is an explicit C++17 CMake/Ninja project using the Clang compiler for cross-platform compilation. We're currently focusing on supporting Windows and Linux platforms.
+The engine project is an explicit C++20 CMake/Ninja project using the Clang compiler for cross-platform compilation. We're currently focusing on supporting Windows and Linux platforms.
 
 ## Building the project (Contribution/Testing)
 As we're still in the planning phase, we can't provide exact details as it might be inaccurate. 
@@ -13,13 +13,14 @@ But in order to build the project you'll need to make sure of a few things:
     - For Windows, install Visual Studio 2022 with the latest Windows SDK installed
     - For Linux distributions, refer to your wiki/manual and install packages such as `build-essential` (Ubuntu/Debian) or `base-devel` (Arch/Endeavour/CatchyOS).
 - Building tools for this project needs to be installed
-    - Install **LLVM/Clang, CMake, Git**
+    - Install **LLVM/Clang (C/C++ Compiler), CMake(Generator for Buildsystem), Ninja (Buildsystem), Git (Version Control System)**
 - Resolve dependencies for the project
     - Run `git clone https://github.com/microsoft/vcpkg` and in the git repository folder initialize **VCPKG** by running `bootstrap-vcpkg` script
     - Register the `VCPKG_ROOT` enviourment variable witht the path of your VCPKG installation (e.g `/home/user/vcpkg`) and also add the path to the `PATH` enviorment variable to have access the `vcpkg` executable.
-    - Run `vcpkg integrate install` if you want to integrete vcpkg with your shell/machine.
-    - Install `glfw3, spdlog, fmt` using `vcpkg install <single-package-name>`
+    - Run `vcpkg integrate install` if you want to integrete vcpkg with your shell/machine. (Optional)
+    - Install the dependencies using `vcpkg install` in the project root directory.
     - **Addtional Note:** Linux users might be able to fetch these packages using thier native package managers. It's highly recommended to get `glfw3-wayland` package for wayland support from native package vendors instead of VCPKG.
+        - You can look into what packages are being used by the engine and/or other subprojects by checking thier `CMakeLists.txt` file in the subfolders.
 ****
 For building the project first list out the avaiable **configuration** presets:
 ```pwsh

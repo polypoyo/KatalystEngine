@@ -2,5 +2,6 @@
 .vs/
 .vscode/
 
-# Output
+# Unneccessary output directories required for building
 Output/
+vcpkg_installed/
