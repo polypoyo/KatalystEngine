@@ -1,6 +1,7 @@
 # Visual Studio related files
 .vs/
 .vscode/
+*.user
 
 # Unneccessary output directories required for building
 Output/
