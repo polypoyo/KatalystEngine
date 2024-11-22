@@ -1,3 +1,5 @@
+#include <glad/glad.h>
+
 #include "Utilities/Log.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"
@@ -47,6 +49,12 @@ namespace Katalyst
 
 		m_Window = glfwCreateWindow(props.Width, props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
+
+		// Initialize OpenGL Context
+		KL_CORE_INFO("Initializing OpenGL Context");
+		int GlInitStatus = gladLoadGL(glfwGetProcAddress);
+		KL_CORE_ASSERT(GlInitStatus, "Unable to initialize OpenGL using Glad2");
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 

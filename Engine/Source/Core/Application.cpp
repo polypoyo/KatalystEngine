@@ -1,5 +1,6 @@
 #include <KatalystPCH.h>
 #include <GLFW/glfw3.h>
+#include <glad/gl.h>
 
 #include "Utilities/Log.h"
 #include "Core/Application.h"
@@ -39,8 +40,8 @@ namespace Katalyst
 
 		while (m_Running) 
 		{
-			glClearColor(0.16, 0.17, 20, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+            glad_glClearColor(0.16, 0.17, 20, 1);
+            glad_glClear(GL_COLOR_BUFFER_BIT);
 
 			for (Layer* layer : m_LayerStack)
 			{

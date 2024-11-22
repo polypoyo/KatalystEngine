@@ -6,6 +6,9 @@ project(KatalystEngine)
 find_package(spdlog REQUIRED)
 find_package(glfw3 REQUIRED)
 
+# Add ThirdParty subprojects
+add_subdirectory("ThirdParty/glad") # Provides OpenGL 4.6 and Vulkan 1.3 Loaders
+
 # Collect all source files
 file(GLOB_RECURSE KATALYST_SOURCES 
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp"
@@ -42,6 +45,9 @@ set(PROJECT_SOURCES ${KATALYST_SOURCES} ${PLATFORM_SOURCES})
 # Create the shared library
 add_library(KatalystEngine SHARED ${PROJECT_SOURCES})
 
+# Add compiler defintions
+target_compile_definitions(KatalystEngine PRIVATE GLFW_INCLUDE_NONE)
+
 # Precompiled headers
 target_precompile_headers(KatalystEngine PUBLIC 
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/KatalystPCH.h"
@@ -52,14 +58,15 @@ target_include_directories(KatalystEngine PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/Source"
 )
 
-# Link dependencies
+# Link dependencies from packages
 target_link_libraries(KatalystEngine PUBLIC spdlog::spdlog_header_only glfw)
+
+# Link dependencies from ThirdParty
+target_link_libraries(KatalystEngine PUBLIC glad)
 
 # Link Platform-specific libraries
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    target_link_libraries(KatalystEngine PUBLIC dwmapi opengl32)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    target_link_libraries(KatalystEngine PUBLIC GL)
+    target_link_libraries(KatalystEngine PUBLIC dwmapi)
 endif()
 
 install(TARGETS KatalystEngine DESTINATION ./lib/)

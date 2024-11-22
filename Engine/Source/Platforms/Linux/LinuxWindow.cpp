@@ -1,3 +1,6 @@
+#include <GLFW/glfw3.h>
+#include <glad/gl.h>
+
 #include "Utilities/Log.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"
@@ -42,13 +45,19 @@ namespace Katalyst
 			int success = glfwInit();
 			const char* errorMessage;
 			int errorCode = glfwGetError(&errorMessage);
-			KL_CORE_ASSERT(success, "Unable to initialize GLFW: " + fmt::format("0x{:x} {:s}", errorCode, errorMessage));
+			KL_CORE_ASSERT(success, "Unable to initialize GLFW: " + std::format("0x{:x} {:s}", errorCode, errorMessage));
 
 			s_GlFWInitialized = true;
 		}
 
 		m_Window = glfwCreateWindow(props.Width, props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
+
+		// Initialize OpenGL Context
+        KL_CORE_INFO("Initializing OpenGL Context");
+		int GlInitStatus = gladLoadGL(glfwGetProcAddress);
+		KL_CORE_ASSERT(GlInitStatus, "Unable to initialize OpenGL using Glad2");
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
