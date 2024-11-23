@@ -5,6 +5,7 @@ project(KatalystEngine)
 # Find engine library packages
 find_package(spdlog REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(imgui CONFIG REQUIRED)
 
 # Add ThirdParty subprojects
 add_subdirectory("ThirdParty/glad") # Provides OpenGL 4.6 and Vulkan 1.3 Loaders
@@ -59,7 +60,7 @@ target_include_directories(KatalystEngine PUBLIC
 )
 
 # Link dependencies from packages
-target_link_libraries(KatalystEngine PUBLIC spdlog::spdlog_header_only glfw)
+target_link_libraries(KatalystEngine PUBLIC spdlog::spdlog_header_only glfw imgui::imgui)
 
 # Link dependencies from ThirdParty
 target_link_libraries(KatalystEngine PUBLIC glad)
