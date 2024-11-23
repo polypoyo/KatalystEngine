@@ -10,3 +10,6 @@ constexpr auto KL_COPYRIGHT_STRING = "Copyright (C) 2024-2025 Kaabir Akeemuzzman
 #include "Core/EntryPoint.h" // Entry point for client applications.
 #include "Layers/Layer.h" // Allowing to create layers for client applications.
 #include "Utilities/Log.h" // The logger class along with access to logging macros
+
+// Intended for testing only
+#include "Layers/ImGuiLayer/ImGuiLayer.h"

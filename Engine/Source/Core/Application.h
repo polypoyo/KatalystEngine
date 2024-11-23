@@ -22,7 +22,7 @@ namespace Katalyst
 
         // Getters for Application
         inline Window& GetWindow() { return *m_Window; }
-        inline Application& Get() { return *s_Instance; }
+        inline static Application& Get() { return *s_Instance; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 

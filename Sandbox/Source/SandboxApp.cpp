@@ -21,6 +21,7 @@ public:
 	Sandbox() 
 	{
 		PushLayer(new ExampleLayer());
+        PushOverlay(new Katalyst::ImGuiLayer());
 	} // Sample Constructor logic
 	~Sandbox() {} // Undefined destructor
 };
