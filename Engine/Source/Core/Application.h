@@ -19,6 +19,10 @@ namespace Katalyst
 
 		void PushLayer(Layer* layer); // Adds layers - To a spot
 		void PushOverlay(Layer* overlay); // Adds overlays - Towards the end
+
+        // Getters for Application
+        inline Window& GetWindow() { return *m_Window; }
+        inline Application& Get() { return *s_Instance; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
@@ -26,6 +30,8 @@ namespace Katalyst
 		bool m_Running = true;
 
 		LayerStack m_LayerStack;
+    private:
+        static Application* s_Instance; // Application instance
 	};
 
 	Application* CreateApplication();
