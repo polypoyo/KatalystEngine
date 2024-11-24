@@ -17,9 +17,14 @@ namespace Katalyst
 		s_ClientLogger = spdlog::stdout_color_mt("Application");
 
 		// Sets up the log level for individual logger threads.
-		s_CoreLogger->set_level(spdlog::level::trace);
-		s_ClientLogger->set_level(spdlog::level::trace);
+#ifdef KL_DEBUG_BUILD
+        s_CoreLogger->set_level(spdlog::level::trace);
+        s_ClientLogger->set_level(spdlog::level::trace);
+#else
+        s_CoreLogger->set_level(spdlog::level::info);
+        s_ClientLogger->set_level(spdlog::level::info);
+#endif
 
-		KL_CORE_INFO("Log has been initialized. Powered by SPDLOG.");
+        KL_CORE_INFO("Log has been initialized. Powered by SPDLOG.");
 	}
 }

@@ -40,8 +40,10 @@ file(GLOB_RECURSE PLATFORM_SOURCES
 # Combine common and platform-specific sources
 set(PROJECT_SOURCES ${KATALYST_SOURCES} ${PLATFORM_SOURCES})
 
-# Log the filtered sources (optional, for debugging)
-#message(STATUS "Filtered sources: ${PLATFORM_SOURCES}")
+# Debug specific configurations
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_definitions(-DKL_DEBUG_BUILD) # This will enable debug specific features.
+endif()
 
 # Create the shared library
 add_library(KatalystEngine SHARED ${PROJECT_SOURCES})

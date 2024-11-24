@@ -47,6 +47,13 @@ namespace Katalyst
 #define KL_ERROR(...)::Katalyst::Log::GetClientLogger()->error(__VA_ARGS__)
 #define KL_CRITICAL(...)::Katalyst::Log::GetClientLogger()->critical(__VA_ARGS__)
 
-// Forcefully enable assertion for now
-#define KL_CORE_ASSERT(x, ...) {if (!(x)) {KL_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __builtin_trap();}}
-#define KL_ASSERT(x, ...) {if (!(x)) {KL_ERROR("Assertion Failed: {0}", __VA_ARGS__); __builtin_trap();}}
+
+// Enables or disables asserts based on the defintion.
+// Should only be enabled on debug builds.
+#ifdef KL_DEBUG_BUILD
+    #define KL_CORE_ASSERT(x, ...) {if (!(x)) {KL_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __builtin_trap();}}
+    #define KL_ASSERT(x, ...) {if (!(x)) {KL_ERROR("Assertion Failed: {0}", __VA_ARGS__); __builtin_trap();}}
+#else
+    #define KL_CORE_ASSERT(x, ...)
+    #define KL_ASSERT(x, ...)
+#endif

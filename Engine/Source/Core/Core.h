@@ -14,15 +14,9 @@
 	#define KL_API __attribute__((visibility("default")))
 #endif
 
-//#ifdef KL_ENABLE_ASSERTS
-//	#define KL_ASSERT(x, ...) {if (!(x)) {KL_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
-//	#define KL_CLIENT_ASSERT(x, ...) {if (!(x)) {KL_CLIENT_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
-//#else
-//	#define KL_ASSERT(x, ...)
-//	#define KL_CLIENT_ASSERT(x, ...)
-//#endif
-
-
 // This is a bitshift operator where if someone puts a value here, it'll be shifted by one.
 // This apparently allows the events to have multiple categories.
 #define BIT(x) (1 << x)
+
+// This allows you to easily bind any event if necessary
+#define KL_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
