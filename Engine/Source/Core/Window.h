@@ -16,6 +16,8 @@ namespace Katalyst {
             : Title(title), Width(width), Height(height) {}
     };
 
+    // This is an interface that is to be implemented per platform.
+    // This is because each API/Platform might have it's own Windowing/Display system.
     class KL_API Window {
     public:
         using EventCallbackFn = std::function<void(Event&)>;
@@ -27,10 +29,13 @@ namespace Katalyst {
         virtual unsigned int GetWidth() const = 0;
         virtual unsigned int GetHeight() const = 0;
         
+        // Window attributes.
         virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
         virtual void SetVSync(bool enabled) = 0;
-        
         virtual bool IsVSync() const = 0;
+
+        // This fetches the the native window for the platform. It can be GLFWWindow, HWIND etc.
+        virtual void* GetNativeWindow() const = 0;
 
         static Window* Create(const WindowProps& props = WindowProps());
     };

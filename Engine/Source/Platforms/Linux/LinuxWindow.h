@@ -15,13 +15,16 @@ namespace Katalyst
 
 		void OnUpdate() override;
 
-		inline unsigned int GetWidth() const override { return m_Data.Width; };
-		inline unsigned int GetHeight() const override { return m_Data.Height; };
+        inline unsigned int GetWidth() const override { return m_Data.Width; }
+        inline unsigned int GetHeight() const override { return m_Data.Height; }
 
 		// Window Attributes
-		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; };
+        inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
+
+        // Should return GLFWwindow
+        inline void* GetNativeWindow() const override { return m_Window; }
 	private:
 		virtual void Init(const WindowProps& props);
 		virtual void Shutdown();
