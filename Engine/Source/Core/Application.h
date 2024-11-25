@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Core.h"
-#include "Events/ApplicationEvent.h"
-#include "Window.h"
+#include "Core/Core.h"
+#include "Core/Window.h"
+#include "Core/Input.h"
 #include "Layers/LayerStack.h"
-
+#include "Events/ApplicationEvent.h"
 namespace Katalyst
 {
 	class KL_API Application

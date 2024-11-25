@@ -55,6 +55,9 @@ namespace Katalyst
 			}
 
 			m_Window->OnUpdate();
+
+            auto[x,y] = Input::GetMousePosition();
+            KL_CORE_TRACE("{0},{1}", x, y);
 		}
 	}
 
