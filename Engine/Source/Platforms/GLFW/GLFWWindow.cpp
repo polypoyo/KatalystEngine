@@ -1,11 +1,12 @@
-#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glad/gl.h>
 
 #include "Utilities/Log.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
 
-#include "Platforms/Windows/WindowsWindow.h"
+#include "Platforms/GLFW/GLFWWindow.h"
 namespace Katalyst 
 {
 	static bool s_GlFWInitialized = false;
@@ -17,32 +18,34 @@ namespace Katalyst
 
 	Window* Window::Create(const WindowProps& props)
 	{
-		return new WindowsWindow(props);
+		return new KatalystGLFWWindow(props);
 	}
 
-	WindowsWindow::WindowsWindow(const WindowProps& props) 
+	KatalystGLFWWindow::KatalystGLFWWindow(const WindowProps& props) 
 	{
 		Init(props);
 	}
 
-	WindowsWindow::~WindowsWindow() 
+	KatalystGLFWWindow::~KatalystGLFWWindow()
 	{
 		Shutdown();
 	}
 
-	void WindowsWindow::Init(const WindowProps& props)
+	void KatalystGLFWWindow::Init(const WindowProps& props)
 	{
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
-		KL_CORE_INFO("Creating Window: {0} ({1}x{2})", props.Title, props.Width, props.Height);
+		KL_CORE_INFO("Creating Window: {0} ({1}x{2}) on GLFW", props.Title, props.Width, props.Height);
 
 		// Initialize GLFW
 		if (!s_GlFWInitialized)
 		{
 			int success = glfwInit();
-			KL_CORE_ASSERT(success, "Unable to initialize GLFW");
+			const char* errorMessage;
+			int errorCode = glfwGetError(&errorMessage);
+			KL_CORE_ASSERT(success, "Unable to initialize GLFW: " + std::format("0x{:x} {:s}", errorCode, errorMessage));
 
 			s_GlFWInitialized = true;
 		}
@@ -51,7 +54,7 @@ namespace Katalyst
 		glfwMakeContextCurrent(m_Window);
 
 		// Initialize OpenGL Context
-		KL_CORE_INFO("Initializing OpenGL Context");
+        	KL_CORE_INFO("Initializing OpenGL Context");
 		int GlInitStatus = gladLoadGL(glfwGetProcAddress);
 		KL_CORE_ASSERT(GlInitStatus, "Unable to initialize OpenGL using Glad2");
 
@@ -105,13 +108,13 @@ namespace Katalyst
 				}
 			});
 
-        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
-            {
-                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+        	glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
+            		{
+                		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-                KeyTypedEvent event(keycode);
-                data.EventCallback(event);
-            });
+                		KeyTypedEvent event(keycode);
+                		data.EventCallback(event);
+            		});
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 			{
@@ -148,21 +151,21 @@ namespace Katalyst
 
 				MouseMovedEvent event((float)xPos, (float)yPos);
 				data.EventCallback(event);
-			});
-	}
+            });
+    }
 
-	void WindowsWindow::Shutdown()
+	void KatalystGLFWWindow::Shutdown()
 	{
 		glfwDestroyWindow(m_Window);
 	}
 
-	void WindowsWindow::OnUpdate()
+	void KatalystGLFWWindow::OnUpdate()
 	{
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
 
-	void WindowsWindow::SetVSync(bool enabled)
+	void KatalystGLFWWindow::SetVSync(bool enabled)
 	{
 		if (enabled)
 			glfwSwapInterval(1);
@@ -172,7 +175,7 @@ namespace Katalyst
 		m_Data.VSync = enabled;
 	}
 
-	bool WindowsWindow::IsVSync() const
+	bool KatalystGLFWWindow::IsVSync() const
 	{
 		return m_Data.VSync;
 	}

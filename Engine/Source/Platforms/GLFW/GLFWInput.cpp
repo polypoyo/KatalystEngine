@@ -2,12 +2,12 @@
 #include <GLFW/glfw3.h>
 
 #include "Core/Application.h"
-#include "Platforms/Windows/WindowsInput.h"
+#include "Platforms/GLFW/GLFWInput.h"
 namespace Katalyst
 {
-    Input* Input::s_Instance = new WindowsInput();
+    Input* Input::s_Instance = new KatalystGLFWInput();
 
-    bool WindowsInput::IsKeyPressedImpl(int keycode)
+    bool KatalystGLFWInput::IsKeyPressedImpl(int keycode)
     {
         auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         auto state = glfwGetKey(window, keycode);
@@ -15,7 +15,7 @@ namespace Katalyst
         return state == GLFW_PRESS || state == GLFW_RELEASE;
     }
 
-    bool WindowsInput::IsMouseButtonPressedImpl(int button)
+    bool KatalystGLFWInput::IsMouseButtonPressedImpl(int button)
     {
         auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         auto state = glfwGetMouseButton(window, button);
@@ -23,7 +23,7 @@ namespace Katalyst
         return state == GLFW_PRESS;
     }
 
-    std::pair<float, float> WindowsInput::GetMousePositionImpl()
+    std::pair<float, float> KatalystGLFWInput::GetMousePositionImpl()
     {
         auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         double xPos, yPos;
@@ -32,13 +32,13 @@ namespace Katalyst
         return { (float)xPos, (float)yPos };
     }
 
-    float WindowsInput::GetMouseXImpl()
+    float KatalystGLFWInput::GetMouseXImpl()
     {
         auto[x, y] = GetMousePositionImpl();
         return x;
     }
 
-    float WindowsInput::GetMouseYImpl()
+    float KatalystGLFWInput::GetMouseYImpl()
     {
         auto[x, y] = GetMousePositionImpl();
         return y;

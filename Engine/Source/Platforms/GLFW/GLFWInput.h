@@ -2,7 +2,7 @@
 
 #include "Core/Input.h"
 namespace Katalyst {
-    class LinuxInput : public Input
+    class KatalystGLFWInput : public Input
     {
     protected:
         bool IsKeyPressedImpl(int keycode) override;
