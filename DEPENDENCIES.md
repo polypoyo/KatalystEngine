@@ -7,8 +7,10 @@ The Katalyst Engine relies on several third-party libraries and tools to support
 - **[Hazel Engine](https://github.com/TheCherno/Hazel)** - Apache 2.0 License
     - We're including this because this project is a recreation of the this project and we're resuing quite a lot too from this project.
 - **[GLFW](https://www.glfw.org/)** - Zlib License
-- **[OpenGL](https://www.opengl.org/)** - Khronos Group Open License
+- **[glad2](https://github.com/Dav1dde/glad)** - MIT + Apache 2 Licenses
+	- This project provides the OpenGL and Vulkan Loaders. Vulkan and OpenGL are trademarks of the Khronos Group Inc.
 - **[spdlog](https://github.com/gabime/spdlog)** - MIT License
+- **[imgui](https://github.com/ocornut/imgui)** - MIT License
 
 ## Build Tools and Compilers
 
