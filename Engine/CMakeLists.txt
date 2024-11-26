@@ -21,21 +21,31 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     message(STATUS "Building for Windows.")
     add_definitions(-DKL_ENGINE_EXPORT)
 
-    # Exclude Linux platform files
-    list(FILTER KATALYST_SOURCES EXCLUDE REGEX ".*Platforms/Linux/.*")
+    # Check if Linux folder exists before excluding it
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Source/Platforms/Linux")
+        list(FILTER KATALYST_SOURCES EXCLUDE REGEX ".*Platforms/Linux/.*")
+    endif()
 
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     message(STATUS "Building for Linux")
 
-    # Exclude Windows platform files
-    list(FILTER KATALYST_SOURCES EXCLUDE REGEX ".*Platforms/Windows/.*")
+    # Check if Windows folder exists before excluding it
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Source/Platforms/Windows")
+        list(FILTER KATALYST_SOURCES EXCLUDE REGEX ".*Platforms/Windows/.*")
+    endif()
 endif()
 
 # Collect platform-specific source files
-file(GLOB_RECURSE PLATFORM_SOURCES
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Platforms/${CMAKE_SYSTEM_NAME}/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Platforms/${CMAKE_SYSTEM_NAME}/*.h"
-)
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Source/Platforms/${CMAKE_SYSTEM_NAME}")
+    file(GLOB_RECURSE PLATFORM_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/Source/Platforms/${CMAKE_SYSTEM_NAME}/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Source/Platforms/${CMAKE_SYSTEM_NAME}/*.h"
+    )
+else()
+    message(WARNING "Platform-specific folder for ${CMAKE_SYSTEM_NAME} does not exist.")
+    set(PLATFORM_SOURCES "")
+endif()
+
 
 # Combine common and platform-specific sources
 set(PROJECT_SOURCES ${KATALYST_SOURCES} ${PLATFORM_SOURCES})
