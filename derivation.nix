@@ -16,6 +16,7 @@
     ];
     buildInputs = with pkgs; [
       spdlog
+      imgui
       # For some reason, regular glfw-wayland
       # doesn't work. So, we have to use this
       # version intended for Minecraft. Logic.
